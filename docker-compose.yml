@@ -4,7 +4,7 @@ services:
     container_name: unifi
     image: jacobalberty/unifi:stable
     volumes:
-      - ~/unifi/unifi:/unifi
+      - ./unifi:/unifi
     init: true
     restart: always
     ports:
