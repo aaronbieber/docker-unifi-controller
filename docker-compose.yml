@@ -1,0 +1,19 @@
+version: "2.3"
+services:
+  unifi:
+    container_name: unifi
+    image: jacobalberty/unifi:stable
+    volumes:
+      - ~/unifi/unifi:/unifi
+    init: true
+    restart: always
+    ports:
+      - "192.168.10.43:443:443"
+      - "192.168.10.43:8880:8880"
+      - "192.168.10.43:8443:8443"
+      - "192.168.10.43:8080:8080"
+      - "192.168.10.43:3478:3478/udp"
+      - "192.168.10.43:10001:10001/udp"
+    environment:
+      RUNAS_UID0: "false"
+      TZ: "America/New_York"

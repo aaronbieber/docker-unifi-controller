@@ -1,0 +1,7 @@
+unifi/cert
+unifi/log
+unifi/data/backup
+unifi/data/db
+unifi/data/firmware.json
+unifi/data/keystore
+unifi/data/sites
