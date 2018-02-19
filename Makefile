@@ -12,24 +12,16 @@ uchain = unifi/cert/chain.pem
 uprivkey = unifi/cert/privkey.pem 
 ucerts = $(ucert) $(uchain) $(uprivkey)
 
-userid := $(shell id -u)
 uname := $(shell whoami)
 
 owners:
-ifeq ($(userid),0)
-	groupadd --gid 999 unifi;
-	useradd --gid 999 --uid 999 -M unifi;
-	adduser $(uname) unifi
-else
-	@echo "This target requires root."
-endif
+	$(info $(uname))
+	sudo groupadd --gid 999 unifi; \
+		sudo useradd --gid 999 --uid 999 -M unifi; \
+		sudo adduser $(uname) unifi
 
 perms:
-ifeq ($(userid),0)
-	chmod -R g+rwX unifi
-else
-	@echo "This target requires root."
-endif
+	sudo chmod -R g+rwX unifi
 
 certbot-auto:
 	wget https://dl.eff.org/certbot-auto
@@ -43,10 +35,6 @@ $(certs): certbot-auto
 		-d unifi.gquad.space
 
 $(ucerts): $(certs)
-ifeq ($(userid),0)
-	cp $(cert) $(ucert)
-	cp $(chain) $(uchain)
-	cp $(privkey) $(uprivkey)
-else
-	@echo "This target requires root."
-endif
+	sudo cp $(cert) $(ucert)
+	sudo cp $(chain) $(uchain)
+	sudo cp $(privkey) $(uprivkey)
