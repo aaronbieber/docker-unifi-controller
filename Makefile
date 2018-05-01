@@ -1,3 +1,7 @@
+# Run with sudo, or Make won't be able to stat the cert files
+# to know whether they have been generated or not, or to check
+# their dates.
+
 .PHONY: all owners perms certs test
 
 all: owners perms $(ucerts)
