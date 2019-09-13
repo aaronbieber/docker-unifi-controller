@@ -2,7 +2,7 @@
 # to know whether they have been generated or not, or to check
 # their dates.
 
-.PHONY: all owners perms certs test
+.PHONY: all owners perms test certinstall
 
 all: owners perms $(ucerts)
 
@@ -27,18 +27,16 @@ owners:
 perms:
 	sudo chmod -R g+rwX unifi
 
-certbot-auto:
+certbot-auto: ./certbot-auto
 	wget https://dl.eff.org/certbot-auto
 	chmod 0755 ./certbot-auto
 
-certs: $(ucerts)
-
-$(certs): certbot-auto
+renew: certbot-auto
 	./certbot-auto certonly --manual \
 		--preferred-challenges dns \
 		-d unifi.gquad.space
 
-$(ucerts): $(certs)
+certinstall: $(certs)
 	sudo cp $(cert) $(ucert)
 	sudo cp $(chain) $(uchain)
 	sudo cp $(privkey) $(uprivkey)
